@@ -888,7 +888,8 @@
 
     function updateDisplay(searchTerm = '') {
         const filteredWords = vocabulary.words.filter(word => 
-            word.word.includes(searchTerm) || word.meaning.includes(searchTerm)
+            word.word.toLowerCase().includes(searchTerm.toLowerCase()) || 
+            word.meaning.toLowerCase().includes(searchTerm.toLowerCase())
         );
         const notMemorized = filteredWords.filter(w => !w.memorized);
         const memorized = filteredWords.filter(w => w.memorized);
