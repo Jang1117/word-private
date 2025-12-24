@@ -792,11 +792,11 @@
         const meaningInput = document.getElementById(`edit-meaning-${id}`);
         
         if (wordInput && meaningInput) {
-            const newWord = wordInput.value.trim();
-            const newMeaning = meaningInput.value.trim();
+            const newWord = wordInput.value.trim();  // 원본 그대로 유지
+            const newMeaning = meaningInput.value.trim();  // 원본 그대로 유지
             
             if (newWord && newMeaning) {
-                // 중복 체크 (자기 자신은 제외)
+                // 중복 체크 (자기 자신은 제외) - 비교할 때만 toLowerCase 사용
                 const isDuplicate = vocabulary.words.some(w => 
                     w.id !== id && w.word.toLowerCase() === newWord.toLowerCase()
                 );
@@ -805,11 +805,11 @@
                     alert('이미 등록된 단어입니다.');
                     return;
                 }
-
+    
                 const word = vocabulary.words.find(w => w.id === id);
                 if (word) {
-                    word.word = newWord;
-                    word.meaning = newMeaning;
+                    word.word = newWord;  // trim()된 원본 값 저장
+                    word.meaning = newMeaning;  // trim()된 원본 값 저장
                     saveToStorage();
                     updateDisplay();
                 }
