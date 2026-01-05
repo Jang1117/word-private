@@ -1023,7 +1023,19 @@
                 jsonData.forEach(row => {
                     const word = row['인도네시아어'] || row['word'] || row['Word'];
                     const meaning = row['한글 뜻'] || row['meaning'] || row['Meaning'];
-                    const memorized = row['암기 여부'] === true || row['암기 여부'] === 'true' || row['암기 여부'] === 'TRUE';
+                    const memorizedRaw = row['암기 여부'];
+                    const memorized = memorizedRaw === true || 
+                                      memorizedRaw === 'true' || 
+                                      memorizedRaw === 'TRUE' || 
+                                      memorizedRaw === 'True' ||
+                                      memorizedRaw === 1 ||
+                                      memorizedRaw === '1' ||
+                                      memorizedRaw === 'O' ||
+                                      memorizedRaw === 'o' ||
+                                      memorizedRaw === 'Y' ||
+                                      memorizedRaw === 'y' ||
+                                      memorizedRaw === 'yes' ||
+                                      memorizedRaw === 'YES';
                     const addedDate = row['추가 날짜'] || row['date'] || row['Date'];
                     
                     if (word && meaning) {
