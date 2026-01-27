@@ -77,6 +77,39 @@
             transform: scale(0.95);
         }
 
+        .theme-button {
+            position: absolute;
+            top: 15px;
+            right: 55px; /* X 버튼(15px) 기준 왼쪽으로 배치 */
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-button:active {
+            transform: scale(0.95);
+        }
+
+        /* 흑백(그레이스케일) 모드 */
+        body.mono-mode {
+            filter: grayscale(1) contrast(1.05);
+        }
+
+
         .content {
             padding: 15px;
         }
@@ -574,6 +607,8 @@
 <body>
     <div class="container">
         <div class="header">
+            <button class="theme-button" onclick="toggleTheme()" title="테마 변경">🌗</button>
+            <button class="reset-button" onclick="resetAllData()" title="모든 단어 초기화">×</button>
             <button class="reset-button" onclick="resetAllData()" title="모든 단어 초기화">×</button>
             <h1>🇮🇩 인도네시아어 단어장</h1>
             <p>단어를 입력하고 플래시카드로 학습하세요</p>
@@ -681,6 +716,16 @@
     let currentPageNotMem = 1;
     let currentPageMem = 1;
 
+    function applyThemeFromStorage() {
+        const theme = localStorage.getItem('themeMode') || 'color';
+        document.body.classList.toggle('mono-mode', theme === 'mono');
+    }
+
+    function toggleTheme() {
+        const isMono = document.body.classList.toggle('mono-mode');
+        localStorage.setItem('themeMode', isMono ? 'mono' : 'color');
+    }
+
     // 날짜 포맷 함수
     function formatDate(date) {
         const d = new Date(date);
@@ -706,6 +751,7 @@
     }
 
     loadFromStorage();
+    applyThemeFromStorage();
 
     // 단어 입력 필드에서 실시간 검색
     function updateSearchFromWordInput() {
