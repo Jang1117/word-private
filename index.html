@@ -750,7 +750,8 @@
         
     // 비교/검색용: 악센트 제거 + 소문자
     function normalizeKey(str) {
-      return stripDiacritics(str).toLowerCase();
+      // 검색/중복판정도 괄호를 공백처럼 취급
+      return toLookupText(str).toLowerCase();
     }
     // ===========================================
 
