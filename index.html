@@ -1070,16 +1070,7 @@
       });
     }
 
-    function getLookupTerms(raw) {
-      // 악센트 제거 + 앞뒤 공백 정리
-      const cleaned = stripDiacritics(raw).trim();
-    
-      // 공백(여러 칸 포함) 기준으로 단어 분리
-      const terms = cleaned.split(/\s+/).filter(Boolean);
-    
-      // 중복 제거
-      return [...new Set(terms)];
-    }
+
     
     function showNaver(id) {
       const item = vocabulary.words.find(w => w.id === id);
