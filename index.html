@@ -80,7 +80,7 @@
         .theme-button {
             position: absolute;
             top: 15px;
-            right: 55px; /* X 버튼(15px) 기준 왼쪽으로 배치 */
+            right: 55px;
             background: rgba(255, 255, 255, 0.2);
             border: 2px solid white;
             color: white;
@@ -104,7 +104,6 @@
             transform: scale(0.95);
         }
 
-        /* 흑백(그레이스케일) 모드 */
         body.mono-mode .container {
           filter: grayscale(1) contrast(1.05);
         }
@@ -180,11 +179,6 @@
             transform: scale(0.97);
         }
 
-        .btn-quiz {
-            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
-            box-shadow: 0 2px 8px rgba(255, 126, 95, 0.3);
-        }
-
         .btn-review {
             background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
             box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3) !important;
@@ -213,17 +207,9 @@
             flex: 0 1 auto;
         }
 
-        .btn-kbbi {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-        }
-
-        .btn-naver {
-            background: linear-gradient(135deg, #03c75a 0%, #00e676 100%);
-        }
-
-        .btn-daum {
-            background: linear-gradient(135deg, #007bff 0%, #00bfff 100%);
-        }
+        .btn-kbbi { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); }
+        .btn-naver { background: linear-gradient(135deg, #03c75a 0%, #00e676 100%); }
+        .btn-daum  { background: linear-gradient(135deg, #007bff 0%, #00bfff 100%); }
 
         .stats {
             display: grid;
@@ -400,15 +386,9 @@
             transform: scale(0.95);
         }
 
-        .fab-flashcard {
-            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
-        }
+        .fab-flashcard { background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); }
+        .fab-review    { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); }
 
-        .fab-review {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-        }
-
-        /* 모달 스타일 */
         .modal {
             display: none;
             position: fixed;
@@ -479,9 +459,7 @@
             transform-style: preserve-3d;
         }
 
-        .flashcard.is-flipped .flashcard-inner {
-            transform: rotateY(180deg);
-        }
+        .flashcard.is-flipped .flashcard-inner { transform: rotateY(180deg); }
 
         .flashcard-face {
             position: absolute;
@@ -524,14 +502,10 @@
             gap: 10px;
         }
 
-        .flashcard-nav button {
-            flex: 1;
-            padding: 20px 12px; /* 높이 2배 */
-            font-size: 16px;
-        }
-
+        .flashcard-nav button,
         .flashcard-action-btn {
-            padding: 20px 12px; /* 높이 2배 */
+            flex: 1;
+            padding: 20px 12px;
             font-size: 16px;
         }
 
@@ -543,10 +517,7 @@
             margin-bottom: 10px;
         }
 
-        /* 검색 스타일 */
-        .search-section {
-            margin-bottom: 15px;
-        }
+        .search-section { margin-bottom: 15px; }
 
         #searchInput {
             width: 100%;
@@ -556,50 +527,20 @@
             font-size: 16px;
         }
 
-        /* 스크롤바 스타일 (웹킷 브라우저용) */
-        .word-list-content::-webkit-scrollbar {
-            width: 6px;
-        }
+        .word-list-content::-webkit-scrollbar { width: 6px; }
+        .word-list-content::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .word-list-content::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
+        .word-list-content::-webkit-scrollbar-thumb:hover { background: #555; }
 
-        .word-list-content::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .word-list-content::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
-        }
-
-        .word-list-content::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        /* 가로 모드 최적화 */
         @media (orientation: landscape) and (max-height: 500px) {
-            .flashcard {
-                height: 200px;
-            }
-
-            .flashcard-face {
-                font-size: 1.2rem;
-            }
+            .flashcard { height: 200px; }
+            .flashcard-face { font-size: 1.2rem; }
         }
 
-        /* 작은 화면 추가 최적화 */
         @media (max-width: 360px) {
-            .header h1 {
-                font-size: 1.3rem;
-            }
-
-            .btn {
-                font-size: 12px;
-                padding: 9px 10px;
-            }
-
-            .stat-number {
-                font-size: 1.3rem;
-            }
+            .header h1 { font-size: 1.3rem; }
+            .btn { font-size: 12px; padding: 9px 10px; }
+            .stat-number { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -608,7 +549,6 @@
         <div class="header">
             <button class="theme-button" onclick="toggleTheme()" title="테마 변경">🌗</button>
             <button class="reset-button" onclick="resetAllData()" title="모든 단어 초기화">×</button>
-            <!-- 중복된 X 버튼 하나 제거(원본엔 2개 있었음) -->
             <h1>🇮🇩 인도네시아어 단어장</h1>
             <p>단어를 입력하고 플래시카드로 학습하세요</p>
         </div>
@@ -668,17 +608,11 @@
         </div>
     </div>
 
-    <!-- 플로팅 버튼 -->
     <div class="floating-buttons">
-        <button class="floating-btn fab-flashcard" id="startNotMemFlashcardBtn" title="플래시카드">
-            📖
-        </button>
-        <button class="floating-btn fab-review" id="startMemFlashcardBtn" title="복습하기">
-            🔄
-        </button>
+        <button class="floating-btn fab-flashcard" id="startNotMemFlashcardBtn" title="플래시카드">📖</button>
+        <button class="floating-btn fab-review" id="startMemFlashcardBtn" title="복습하기">🔄</button>
     </div>
 
-    <!-- 플래시카드 모달 -->
     <div id="flashcard-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -715,46 +649,38 @@
     let currentPageNotMem = 1;
     let currentPageMem = 1;
 
-    // ====== 추가: 악센트 제거 / 정규화 유틸 ======
-    // béda -> beda
+    // ===== 유틸: 악센트 제거 / 괄호 공백 처리 / 검색키 정규화 =====
     function stripDiacritics(str) {
-      return String(str)
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '');
+      return String(str).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
 
-    
+    // 괄호류를 스페이스처럼 처리 + 공백정리 (사전/검색 모두 공통)
     function toLookupText(raw) {
-      // 1) 악센트 제거
       let s = stripDiacritics(raw);
-    
-      // 2) 괄호류를 공백으로 치환 (스페이스바처럼)
-      // () [] {} <> 및 전각 괄호 등도 같이 처리
+
+      // 괄호류 -> 공백
       s = s.replace(/[()［］\[\]{}｛｝<>＜＞（）【】「」『』]/g, ' ');
-    
-      // 3) 특수문자 중 일부도 공백 처리하고 싶으면(선택):
-      // s = s.replace(/[_/\\|·•]/g, ' ');
-    
-      // 4) 공백 정리
+
+      // 공백 정리
       s = s.replace(/\s+/g, ' ').trim();
-    
       return s;
     }
-    
-    function getLookupTerms(raw) {
-      const cleaned = toLookupText(raw);
-      const terms = cleaned.split(' ').filter(Boolean);
-      return [...new Set(terms)]; // 중복 제거
-    }
-    
-        
-    // 비교/검색용: 악센트 제거 + 소문자
+
+    // 검색/중복 판단용 키
     function normalizeKey(str) {
-      // 검색/중복판정도 괄호를 공백처럼 취급
       return toLookupText(str).toLowerCase();
     }
-    // ===========================================
 
+    // 사전 열 때 단어를 분리 (너무 많이 열리면 팝업 차단되므로 제한)
+    function getLookupTerms(raw, max = 2) {
+      const cleaned = toLookupText(raw);
+      if (!cleaned) return [];
+      const terms = cleaned.split(' ').filter(Boolean);
+      const uniq = [...new Set(terms)];
+      return uniq.slice(0, max);
+    }
+
+    // ===== 테마 =====
     function applyThemeFromStorage() {
         const theme = localStorage.getItem('themeMode') || 'color';
         document.body.classList.toggle('mono-mode', theme === 'mono');
@@ -765,7 +691,7 @@
         localStorage.setItem('themeMode', isMono ? 'mono' : 'color');
     }
 
-    // 날짜 포맷 함수
+    // ===== 저장/로드 =====
     function formatDate(date) {
         const d = new Date(date);
         const year = d.getFullYear();
@@ -786,28 +712,26 @@
             vocabulary.words = parsed.words || [];
         }
         const storedId = localStorage.getItem('nextId');
-        if (storedId) nextId = parseInt(storedId);
+        if (storedId) nextId = parseInt(storedId, 10);
     }
 
     loadFromStorage();
     applyThemeFromStorage();
 
-    // 단어 입력 필드에서 실시간 검색
+    // ===== 입력필드 기반 즉시검색 =====
     function updateSearchFromWordInput() {
         const wordInputValue = document.getElementById('wordInput').value;
         const searchInputValue = document.getElementById('searchInput').value;
 
-        // 단어 입력 필드에 값이 있으면 그걸로 검색, 없으면 검색창 값으로
         if (wordInputValue.trim()) {
             updateDisplay(wordInputValue);
         } else {
             updateDisplay(searchInputValue);
         }
     }
-
-    // 단어 입력 필드에 이벤트 리스너 추가
     document.getElementById('wordInput').addEventListener('input', updateSearchFromWordInput);
 
+    // ===== 단어 CRUD =====
     function addWord() {
         const wordInput = document.getElementById('wordInput');
         const meaningInput = document.getElementById('meaningInput');
@@ -815,11 +739,7 @@
         const meaning = meaningInput.value.trim();
 
         if (word && meaning) {
-            // 중복 체크 (e/é 등 악센트 무시 + 대소문자 무시)
-            const isDuplicate = vocabulary.words.some(w =>
-                normalizeKey(w.word) === normalizeKey(word)
-            );
-
+            const isDuplicate = vocabulary.words.some(w => normalizeKey(w.word) === normalizeKey(word));
             if (isDuplicate) {
                 alert('이미 등록된 단어입니다.');
                 wordInput.focus();
@@ -828,11 +748,12 @@
 
             vocabulary.words.push({
                 id: nextId++,
-                word: word,
-                meaning: meaning,
+                word,
+                meaning,
                 memorized: false,
                 addedDate: new Date().toISOString()
             });
+
             wordInput.value = '';
             meaningInput.value = '';
             wordInput.focus();
@@ -872,67 +793,65 @@
         }
     }
 
+    // ===== 편집 =====
     function enterEditMode(id) {
         const word = vocabulary.words.find(w => w.id === id);
         if (!word) return;
 
         const wordItem = document.querySelector(`[data-word-id="${id}"]`);
-        if (wordItem) {
-            wordItem.classList.add('edit-mode');
-            wordItem.innerHTML = `
-                <div class="edit-inputs" onclick="event.stopPropagation()">
-                    <input type="text" id="edit-word-${id}" value="${word.word}">
-                    <input type="text" id="edit-meaning-${id}" value="${word.meaning}">
-                </div>
-                <div class="edit-buttons">
-                    <button class="btn btn-small" onclick="event.stopPropagation(); saveEdit(${id})">저장</button>
-                    <button class="btn btn-secondary btn-small" onclick="event.stopPropagation(); cancelEdit(${id})">취소</button>
-                </div>
-            `;
+        if (!wordItem) return;
 
-            // 첫 번째 입력창에 자동 포커스
-            setTimeout(() => {
-                document.getElementById(`edit-word-${id}`).focus();
-            }, 0);
-        }
+        wordItem.classList.add('edit-mode');
+        wordItem.innerHTML = `
+            <div class="edit-inputs" onclick="event.stopPropagation()">
+                <input type="text" id="edit-word-${id}" value="${word.word}">
+                <input type="text" id="edit-meaning-${id}" value="${word.meaning}">
+            </div>
+            <div class="edit-buttons">
+                <button class="btn btn-small" onclick="event.stopPropagation(); saveEdit(${id})">저장</button>
+                <button class="btn btn-secondary btn-small" onclick="event.stopPropagation(); cancelEdit(${id})">취소</button>
+            </div>
+        `;
+
+        setTimeout(() => {
+            const el = document.getElementById(`edit-word-${id}`);
+            if (el) el.focus();
+        }, 0);
     }
 
     function saveEdit(id) {
         const wordInput = document.getElementById(`edit-word-${id}`);
         const meaningInput = document.getElementById(`edit-meaning-${id}`);
+        if (!wordInput || !meaningInput) return;
 
-        if (wordInput && meaningInput) {
-            const newWord = wordInput.value.trim();  // 원본 그대로 유지
-            const newMeaning = meaningInput.value.trim();  // 원본 그대로 유지
+        const newWord = wordInput.value.trim();
+        const newMeaning = meaningInput.value.trim();
 
-            if (newWord && newMeaning) {
-                // 중복 체크 (자기 자신 제외) - e/é 등 악센트 무시 + 대소문자 무시
-                const isDuplicate = vocabulary.words.some(w =>
-                    w.id !== id && normalizeKey(w.word) === normalizeKey(newWord)
-                );
+        if (!newWord || !newMeaning) {
+            alert('단어와 뜻을 모두 입력해주세요.');
+            return;
+        }
 
-                if (isDuplicate) {
-                    alert('이미 등록된 단어입니다.');
-                    return;
-                }
+        const isDuplicate = vocabulary.words.some(w => w.id !== id && normalizeKey(w.word) === normalizeKey(newWord));
+        if (isDuplicate) {
+            alert('이미 등록된 단어입니다.');
+            return;
+        }
 
-                const word = vocabulary.words.find(w => w.id === id);
-                if (word) {
-                    word.word = newWord;
-                    word.meaning = newMeaning;
-                    saveToStorage();
-                    updateDisplay();
-                }
-            } else {
-                alert('단어와 뜻을 모두 입력해주세요.');
-            }
+        const word = vocabulary.words.find(w => w.id === id);
+        if (word) {
+            word.word = newWord;
+            word.meaning = newMeaning;
+            saveToStorage();
+            updateDisplay(document.getElementById('searchInput').value);
         }
     }
 
-    function cancelEdit(id) {
+    function cancelEdit() {
         updateDisplay(document.getElementById('searchInput').value);
     }
 
+    // ===== 통계/정렬/페이지 =====
     function updateStats() {
         document.getElementById('totalWords').textContent = vocabulary.words.length;
         const memorizedCount = vocabulary.words.filter(w => w.memorized).length;
@@ -957,47 +876,41 @@
         }
 
         let html = '';
-
         if (currentPage > 1) {
-            html += `<button class="btn btn-small" onclick="changePage(${type === 'notMem' ? '\'notMem\'' : '\'mem\''}, ${currentPage - 1})">◀</button>`;
+            html += `<button class="btn btn-small" onclick="changePage('${type}', ${currentPage - 1})">◀</button>`;
         }
 
         const startPage = Math.max(1, currentPage - 2);
         const endPage = Math.min(totalPages, currentPage + 2);
 
         if (startPage > 1) {
-            html += `<button class="btn btn-small" onclick="changePage(${type === 'notMem' ? '\'notMem\'' : '\'mem\''}, 1)">1</button>`;
+            html += `<button class="btn btn-small" onclick="changePage('${type}', 1)">1</button>`;
             if (startPage > 2) html += '<span>...</span>';
         }
 
         for (let i = startPage; i <= endPage; i++) {
-            html += `<button class="btn btn-small ${i === currentPage ? 'active' : ''}"
-                     onclick="changePage(${type === 'notMem' ? '\'notMem\'' : '\'mem\''}, ${i})">${i}</button>`;
+            html += `<button class="btn btn-small ${i === currentPage ? 'active' : ''}" onclick="changePage('${type}', ${i})">${i}</button>`;
         }
 
         if (endPage < totalPages) {
             if (endPage < totalPages - 1) html += '<span>...</span>';
-            html += `<button class="btn btn-small" onclick="changePage(${type === 'notMem' ? '\'notMem\'' : '\'mem\''}, ${totalPages})">${totalPages}</button>`;
+            html += `<button class="btn btn-small" onclick="changePage('${type}', ${totalPages})">${totalPages}</button>`;
         }
 
         if (currentPage < totalPages) {
-            html += `<button class="btn btn-small" onclick="changePage(${type === 'notMem' ? '\'notMem\'' : '\'mem\''}, ${currentPage + 1})">▶</button>`;
+            html += `<button class="btn btn-small" onclick="changePage('${type}', ${currentPage + 1})">▶</button>`;
         }
 
         container.innerHTML = html;
     }
 
     function changePage(type, page) {
-        if (type === 'notMem') {
-            currentPageNotMem = page;
-        } else {
-            currentPageMem = page;
-        }
+        if (type === 'notMem') currentPageNotMem = page;
+        else currentPageMem = page;
         updateDisplay(document.getElementById('searchInput').value);
     }
 
     function updateDisplay(searchTerm = '') {
-        // e/é 동일 취급: 정규화된 키로 필터링
         const key = normalizeKey(searchTerm);
 
         const filteredWords = vocabulary.words.filter(word => {
@@ -1036,100 +949,76 @@
         };
 
         const notMemorizedList = document.getElementById('notMemorizedList');
-        const paginatedNotMem = notMemorized.slice(
-            (currentPageNotMem - 1) * ITEMS_PER_PAGE,
-            currentPageNotMem * ITEMS_PER_PAGE
-        );
+        const paginatedNotMem = notMemorized.slice((currentPageNotMem - 1) * ITEMS_PER_PAGE, currentPageNotMem * ITEMS_PER_PAGE);
         renderList(notMemorizedList, notMemorized, paginatedNotMem);
         renderPagination('notMemPagination', notMemorized.length, currentPageNotMem, 'notMem');
 
         const memorizedList = document.getElementById('memorizedList');
-        const paginatedMem = memorized.slice(
-            (currentPageMem - 1) * ITEMS_PER_PAGE,
-            currentPageMem * ITEMS_PER_PAGE
-        );
+        const paginatedMem = memorized.slice((currentPageMem - 1) * ITEMS_PER_PAGE, currentPageMem * ITEMS_PER_PAGE);
         renderList(memorizedList, memorized, paginatedMem);
         renderPagination('memPagination', memorized.length, currentPageMem, 'mem');
     }
 
-    // 사전 검색은 악센트 제거해서 검색: béda -> beda
+    // ===== 사전 링크 =====
     function showKBBI(id) {
       const item = vocabulary.words.find(w => w.id === id);
       if (!item) return;
-    
-      const terms = getLookupTerms(item.word);
-    
-      // KBBI는 보통 단어 단위가 더 잘 맞아서, 여러 단어면 각각 탭으로
+
+      const terms = getLookupTerms(item.word, 2);
       if (terms.length <= 1) {
         const q = toLookupText(item.word);
         window.open(`https://kbbi.web.id/${encodeURIComponent(q)}`, '_blank');
         return;
       }
-    
-      terms.forEach(t => {
-        window.open(`https://kbbi.web.id/${encodeURIComponent(t)}`, '_blank');
-      });
+      terms.forEach(t => window.open(`https://kbbi.web.id/${encodeURIComponent(t)}`, '_blank'));
     }
 
-
-    
     function showNaver(id) {
       const item = vocabulary.words.find(w => w.id === id);
       if (!item) return;
-    
-      const terms = getLookupTerms(item.word);
-    
+
+      const terms = getLookupTerms(item.word, 2);
       if (terms.length <= 1) {
         const q = toLookupText(item.word);
         window.open(`https://dict.naver.com/idkodict/#/search?query=${encodeURIComponent(q)}`, '_blank');
         return;
       }
-    
-      terms.forEach(t => {
-        window.open(`https://dict.naver.com/idkodict/#/search?query=${encodeURIComponent(t)}`, '_blank');
-      });
+      terms.forEach(t => window.open(`https://dict.naver.com/idkodict/#/search?query=${encodeURIComponent(t)}`, '_blank'));
     }
 
-    
-    function openDaumWithAutoRetry(query) {
+    // Daum: 사이트 자체 이슈(권한없음/리다이렉트 꼬임) 많아서
+    // 자동 재시도 + fallback(다음 통합검색) 전략
+    function openDaumWithAutoRetryAndFallback(query) {
       const q = encodeURIComponent(query);
       const url = `https://dic.daum.net/search.do?q=${q}&dic=id`;
-    
+      const fallback = `https://search.daum.net/search?w=tot&q=${q}%20%EB%9C%BB`;
+
       const w = window.open(url, '_blank');
       if (!w) {
         alert('팝업이 차단되어 Daum 사전을 열 수 없습니다. 팝업 허용 후 다시 시도해주세요.');
         return;
       }
-    
-      // "엔터 한 번 더"를 코드로 대신 수행 (세션/쿠키 잡히면 보통 여기서 정상 진입)
-      setTimeout(() => {
-        try {
-          w.location.href = url;
-        } catch (e) {
-          // 무시: 일부 환경에서 cross-origin 관련 예외가 날 수 있지만 대개 동작함
-        }
-      }, 900);
+
+      // 엔터 한 번 더 대신 (세션/쿠키 잡히면 보통 정상)
+      setTimeout(() => { try { w.location.href = url; } catch(e) {} }, 800);
+
+      // 그래도 꼬이면 통합검색으로 우회
+      setTimeout(() => { try { w.location.href = fallback; } catch(e) {} }, 2500);
     }
-    
+
     function showDaum(id) {
       const item = vocabulary.words.find(w => w.id === id);
       if (!item) return;
-    
-      // 이전에 쓰던 정규화(악센트 제거/괄호 공백처리) 사용
-      const terms = getLookupTerms(item.word);
-    
-      // 여러 단어면 각 단어별로 열되, 너무 많이 열리면 부담이라 1~2개만 권장
+
+      const terms = getLookupTerms(item.word, 2);
       if (terms.length <= 1) {
-        openDaumWithAutoRetry(toLookupText(item.word));
+        openDaumWithAutoRetryAndFallback(toLookupText(item.word));
         return;
       }
-    
-      // 예: piket malam -> piket, malam 각각
-      terms.forEach(t => openDaumWithAutoRetry(t));
+      terms.forEach(t => openDaumWithAutoRetryAndFallback(t));
     }
 
-
-
+    // ===== Excel =====
     function exportToExcel() {
         if (vocabulary.words.length === 0) {
             alert('내보낼 단어가 없습니다.');
@@ -1183,19 +1072,17 @@
                     const addedDate = row['추가 날짜'] || row['date'] || row['Date'];
 
                     if (word && meaning) {
-                        // 중복 체크: e/é 동일 취급
-                        const isDuplicate = vocabulary.words.some(w =>
-                            normalizeKey(w.word) === normalizeKey(String(word).trim())
-                        );
+                        const wtxt = String(word).trim();
+                        const isDuplicate = vocabulary.words.some(w => normalizeKey(w.word) === normalizeKey(wtxt));
 
                         if (isDuplicate) {
                             duplicateCount++;
                         } else {
                             vocabulary.words.push({
                                 id: nextId++,
-                                word: String(word).trim(),
+                                word: wtxt,
                                 meaning: String(meaning).trim(),
-                                memorized: memorized,
+                                memorized,
                                 addedDate: addedDate ? new Date(addedDate).toISOString() : new Date().toISOString()
                             });
                             importCount++;
@@ -1207,9 +1094,7 @@
                     saveToStorage();
                     updateDisplay();
                     let message = `${importCount}개의 단어를 불러왔습니다.`;
-                    if (duplicateCount > 0) {
-                        message += `\n${duplicateCount}개의 중복 단어는 제외되었습니다.`;
-                    }
+                    if (duplicateCount > 0) message += `\n${duplicateCount}개의 중복 단어는 제외되었습니다.`;
                     alert(message);
                 } else {
                     alert('가져올 수 있는 단어가 없습니다.');
@@ -1223,22 +1108,17 @@
         reader.readAsArrayBuffer(file);
     }
 
-    // 플래시카드 기능
+    // ===== 플래시카드 =====
     const flashcardModal = document.getElementById('flashcard-modal');
 
     function startFlashcardSession(mode) {
         currentFlashcardMode = mode;
-        if (mode === 'notMemorized') {
-            flashcardWords = vocabulary.words.filter(w => !w.memorized);
-        } else {
-            flashcardWords = vocabulary.words.filter(w => w.memorized);
-        }
+        flashcardWords = (mode === 'notMemorized')
+            ? vocabulary.words.filter(w => !w.memorized)
+            : vocabulary.words.filter(w => w.memorized);
 
         if (flashcardWords.length === 0) {
-            const alertMessage = mode === 'notMemorized'
-                ? '플래시카드로 학습할 단어가 없습니다.'
-                : '복습할 암기한 단어가 없습니다.';
-            alert(alertMessage);
+            alert(mode === 'notMemorized' ? '플래시카드로 학습할 단어가 없습니다.' : '복습할 암기한 단어가 없습니다.');
             return;
         }
 
@@ -1253,9 +1133,9 @@
             closeFlashcardModal();
             return;
         }
+
         const word = flashcardWords[currentFlashcardIndex];
-        document.getElementById('flashcard-progress').textContent =
-            `${currentFlashcardIndex + 1} / ${flashcardWords.length}`;
+        document.getElementById('flashcard-progress').textContent = `${currentFlashcardIndex + 1} / ${flashcardWords.length}`;
         document.getElementById('flashcard-front').textContent = word.word;
         document.getElementById('flashcard-back').textContent = word.meaning;
         document.getElementById('flashcard').classList.remove('is-flipped');
@@ -1278,19 +1158,17 @@
 
     function showPrevFlashcard() {
         if (flashcardWords.length === 0) return;
-        currentFlashcardIndex =
-            (currentFlashcardIndex - 1 + flashcardWords.length) % flashcardWords.length;
+        currentFlashcardIndex = (currentFlashcardIndex - 1 + flashcardWords.length) % flashcardWords.length;
         displayFlashcard();
     }
 
     function handleFlashcardAction() {
         if (flashcardWords.length === 0) return;
+
         const currentWord = flashcardWords[currentFlashcardIndex];
         const originalWord = vocabulary.words.find(w => w.id === currentWord.id);
 
-        if (originalWord) {
-            originalWord.memorized = !originalWord.memorized;
-        }
+        if (originalWord) originalWord.memorized = !originalWord.memorized;
 
         flashcardWords.splice(currentFlashcardIndex, 1);
 
@@ -1307,24 +1185,17 @@
         updateDisplay();
     }
 
-    // 이벤트 리스너
-    document.getElementById('startNotMemFlashcardBtn')
-        .addEventListener('click', () => startFlashcardSession('notMemorized'));
-    document.getElementById('startMemFlashcardBtn')
-        .addEventListener('click', () => startFlashcardSession('memorized'));
+    // ===== 이벤트 =====
+    document.getElementById('startNotMemFlashcardBtn').addEventListener('click', () => startFlashcardSession('notMemorized'));
+    document.getElementById('startMemFlashcardBtn').addEventListener('click', () => startFlashcardSession('memorized'));
 
-    flashcardModal.querySelector('.close-button')
-        .addEventListener('click', closeFlashcardModal);
-    document.getElementById('flashcard')
-        .addEventListener('click', () =>
-            document.getElementById('flashcard').classList.toggle('is-flipped')
-        );
-    document.getElementById('flashcard-next-btn')
-        .addEventListener('click', showNextFlashcard);
-    document.getElementById('flashcard-prev-btn')
-        .addEventListener('click', showPrevFlashcard);
-    document.getElementById('flashcard-action-btn')
-        .addEventListener('click', handleFlashcardAction);
+    flashcardModal.querySelector('.close-button').addEventListener('click', closeFlashcardModal);
+    document.getElementById('flashcard').addEventListener('click', () =>
+        document.getElementById('flashcard').classList.toggle('is-flipped')
+    );
+    document.getElementById('flashcard-next-btn').addEventListener('click', showNextFlashcard);
+    document.getElementById('flashcard-prev-btn').addEventListener('click', showPrevFlashcard);
+    document.getElementById('flashcard-action-btn').addEventListener('click', handleFlashcardAction);
 
     document.getElementById('wordInput').addEventListener('keypress', e => {
         if (e.key === 'Enter') document.getElementById('meaningInput').focus();
@@ -1335,14 +1206,11 @@
 
     // 기존 데이터에 addedDate가 없는 경우 추가
     vocabulary.words.forEach(word => {
-        if (!word.addedDate) {
-            word.addedDate = new Date().toISOString();
-        }
+        if (!word.addedDate) word.addedDate = new Date().toISOString();
     });
     saveToStorage();
 
     updateDisplay();
 </script>
-
 </body>
 </html>
