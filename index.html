@@ -109,7 +109,6 @@
           filter: grayscale(1) contrast(1.05);
         }
 
-
         .content {
             padding: 15px;
         }
@@ -217,11 +216,11 @@
         .btn-kbbi {
             background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
         }
-        
+
         .btn-naver {
             background: linear-gradient(135deg, #03c75a 0%, #00e676 100%);
         }
-        
+
         .btn-daum {
             background: linear-gradient(135deg, #007bff 0%, #00bfff 100%);
         }
@@ -581,7 +580,7 @@
             .flashcard {
                 height: 200px;
             }
-            
+
             .flashcard-face {
                 font-size: 1.2rem;
             }
@@ -592,12 +591,12 @@
             .header h1 {
                 font-size: 1.3rem;
             }
-            
+
             .btn {
                 font-size: 12px;
                 padding: 9px 10px;
             }
-            
+
             .stat-number {
                 font-size: 1.3rem;
             }
@@ -609,7 +608,7 @@
         <div class="header">
             <button class="theme-button" onclick="toggleTheme()" title="테마 변경">🌗</button>
             <button class="reset-button" onclick="resetAllData()" title="모든 단어 초기화">×</button>
-            <button class="reset-button" onclick="resetAllData()" title="모든 단어 초기화">×</button>
+            <!-- 중복된 X 버튼 하나 제거(원본엔 2개 있었음) -->
             <h1>🇮🇩 인도네시아어 단어장</h1>
             <p>단어를 입력하고 플래시카드로 학습하세요</p>
         </div>
@@ -716,6 +715,19 @@
     let currentPageNotMem = 1;
     let currentPageMem = 1;
 
+    // ====== 추가: 악센트 제거 / 정규화 유틸 ======
+    // béda -> beda
+    function stripDiacritics(str) {
+      return String(str)
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+    }
+    // 비교/검색용: 악센트 제거 + 소문자
+    function normalizeKey(str) {
+      return stripDiacritics(str).toLowerCase();
+    }
+    // ===========================================
+
     function applyThemeFromStorage() {
         const theme = localStorage.getItem('themeMode') || 'color';
         document.body.classList.toggle('mono-mode', theme === 'mono');
@@ -757,7 +769,7 @@
     function updateSearchFromWordInput() {
         const wordInputValue = document.getElementById('wordInput').value;
         const searchInputValue = document.getElementById('searchInput').value;
-        
+
         // 단어 입력 필드에 값이 있으면 그걸로 검색, 없으면 검색창 값으로
         if (wordInputValue.trim()) {
             updateDisplay(wordInputValue);
@@ -776,11 +788,11 @@
         const meaning = meaningInput.value.trim();
 
         if (word && meaning) {
-            // 중복 체크 (대소문자 구분 없이)
-            const isDuplicate = vocabulary.words.some(w => 
-                w.word.toLowerCase() === word.toLowerCase()
+            // 중복 체크 (e/é 등 악센트 무시 + 대소문자 무시)
+            const isDuplicate = vocabulary.words.some(w =>
+                normalizeKey(w.word) === normalizeKey(word)
             );
-            
+
             if (isDuplicate) {
                 alert('이미 등록된 단어입니다.');
                 wordInput.focus();
@@ -836,7 +848,7 @@
     function enterEditMode(id) {
         const word = vocabulary.words.find(w => w.id === id);
         if (!word) return;
-    
+
         const wordItem = document.querySelector(`[data-word-id="${id}"]`);
         if (wordItem) {
             wordItem.classList.add('edit-mode');
@@ -850,7 +862,7 @@
                     <button class="btn btn-secondary btn-small" onclick="event.stopPropagation(); cancelEdit(${id})">취소</button>
                 </div>
             `;
-            
+
             // 첫 번째 입력창에 자동 포커스
             setTimeout(() => {
                 document.getElementById(`edit-word-${id}`).focus();
@@ -861,26 +873,26 @@
     function saveEdit(id) {
         const wordInput = document.getElementById(`edit-word-${id}`);
         const meaningInput = document.getElementById(`edit-meaning-${id}`);
-        
+
         if (wordInput && meaningInput) {
             const newWord = wordInput.value.trim();  // 원본 그대로 유지
             const newMeaning = meaningInput.value.trim();  // 원본 그대로 유지
-            
+
             if (newWord && newMeaning) {
-                // 중복 체크 (자기 자신은 제외) - 비교할 때만 toLowerCase 사용
-                const isDuplicate = vocabulary.words.some(w => 
-                    w.id !== id && w.word.toLowerCase() === newWord.toLowerCase()
+                // 중복 체크 (자기 자신 제외) - e/é 등 악센트 무시 + 대소문자 무시
+                const isDuplicate = vocabulary.words.some(w =>
+                    w.id !== id && normalizeKey(w.word) === normalizeKey(newWord)
                 );
-                
+
                 if (isDuplicate) {
                     alert('이미 등록된 단어입니다.');
                     return;
                 }
-    
+
                 const word = vocabulary.words.find(w => w.id === id);
                 if (word) {
-                    word.word = newWord;  // trim()된 원본 값 저장
-                    word.meaning = newMeaning;  // trim()된 원본 값 저장
+                    word.word = newWord;
+                    word.meaning = newMeaning;
                     saveToStorage();
                     updateDisplay();
                 }
@@ -911,14 +923,14 @@
     function renderPagination(containerId, totalItems, currentPage, type) {
         const container = document.getElementById(containerId);
         const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-        
+
         if (totalPages <= 1) {
             container.innerHTML = '';
             return;
         }
 
         let html = '';
-        
+
         if (currentPage > 1) {
             html += `<button class="btn btn-small" onclick="changePage(${type === 'notMem' ? '\'notMem\'' : '\'mem\''}, ${currentPage - 1})">◀</button>`;
         }
@@ -932,7 +944,7 @@
         }
 
         for (let i = startPage; i <= endPage; i++) {
-            html += `<button class="btn btn-small ${i === currentPage ? 'active' : ''}" 
+            html += `<button class="btn btn-small ${i === currentPage ? 'active' : ''}"
                      onclick="changePage(${type === 'notMem' ? '\'notMem\'' : '\'mem\''}, ${i})">${i}</button>`;
         }
 
@@ -958,10 +970,15 @@
     }
 
     function updateDisplay(searchTerm = '') {
-        const filteredWords = vocabulary.words.filter(word => 
-            word.word.toLowerCase().includes(searchTerm.toLowerCase()) || 
-            word.meaning.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+        // e/é 동일 취급: 정규화된 키로 필터링
+        const key = normalizeKey(searchTerm);
+
+        const filteredWords = vocabulary.words.filter(word => {
+            const w = normalizeKey(word.word);
+            const m = normalizeKey(word.meaning);
+            return w.includes(key) || m.includes(key);
+        });
+
         const notMemorized = filteredWords.filter(w => !w.memorized);
         const memorized = filteredWords.filter(w => w.memorized);
 
@@ -971,10 +988,10 @@
         updateStats();
 
         const renderList = (container, data, paginatedData) => {
-            container.innerHTML = data.length === 0 
+            container.innerHTML = data.length === 0
                 ? '<div class="empty-state">해당 단어가 없습니다.</div>'
                 : paginatedData.map(word => `
-                    <div class="word-item" data-word-id="${word.id}" 
+                    <div class="word-item" data-word-id="${word.id}"
                         onclick="if (!event.target.closest('.word-actions')) enterEditMode(${word.id})">
                         <div class="word-text">${word.word}</div>
                         <div class="word-meaning">${word.meaning}</div>
@@ -1008,10 +1025,11 @@
         renderPagination('memPagination', memorized.length, currentPageMem, 'mem');
     }
 
+    // 사전 검색은 악센트 제거해서 검색: béda -> beda
     function showKBBI(id) {
         const word = vocabulary.words.find(w => w.id === id);
         if (word) window.open(
-            `https://kbbi.web.id/${encodeURIComponent(word.word)}`,
+            `https://kbbi.web.id/${encodeURIComponent(stripDiacritics(word.word))}`,
             '_blank'
         );
     }
@@ -1019,15 +1037,15 @@
     function showNaver(id) {
         const word = vocabulary.words.find(w => w.id === id);
         if (word) window.open(
-            `https://dict.naver.com/idkodict/#/search?query=${encodeURIComponent(word.word)}`,
+            `https://dict.naver.com/idkodict/#/search?query=${encodeURIComponent(stripDiacritics(word.word))}`,
             '_blank'
         );
     }
-    
+
     function showDaum(id) {
         const word = vocabulary.words.find(w => w.id === id);
         if (word) window.open(
-            `https://dic.daum.net/search.do?q=${encodeURIComponent(word.word)}&dic=id`,
+            `https://dic.daum.net/search.do?q=${encodeURIComponent(stripDiacritics(word.word))}&dic=id`,
             '_blank'
         );
     }
@@ -1070,9 +1088,9 @@
                     const word = row['인도네시아어'] || row['word'] || row['Word'];
                     const meaning = row['한글 뜻'] || row['meaning'] || row['Meaning'];
                     const memorizedRaw = row['암기 여부'];
-                    const memorized = memorizedRaw === true || 
-                                      memorizedRaw === 'true' || 
-                                      memorizedRaw === 'TRUE' || 
+                    const memorized = memorizedRaw === true ||
+                                      memorizedRaw === 'true' ||
+                                      memorizedRaw === 'TRUE' ||
                                       memorizedRaw === 'True' ||
                                       memorizedRaw === 1 ||
                                       memorizedRaw === '1' ||
@@ -1083,13 +1101,13 @@
                                       memorizedRaw === 'yes' ||
                                       memorizedRaw === 'YES';
                     const addedDate = row['추가 날짜'] || row['date'] || row['Date'];
-                    
+
                     if (word && meaning) {
-                        // 중복 체크
-                        const isDuplicate = vocabulary.words.some(w => 
-                            w.word.toLowerCase() === String(word).trim().toLowerCase()
+                        // 중복 체크: e/é 동일 취급
+                        const isDuplicate = vocabulary.words.some(w =>
+                            normalizeKey(w.word) === normalizeKey(String(word).trim())
                         );
-                        
+
                         if (isDuplicate) {
                             duplicateCount++;
                         } else {
@@ -1135,7 +1153,7 @@
         } else {
             flashcardWords = vocabulary.words.filter(w => w.memorized);
         }
-        
+
         if (flashcardWords.length === 0) {
             const alertMessage = mode === 'notMemorized'
                 ? '플래시카드로 학습할 단어가 없습니다.'
@@ -1143,7 +1161,7 @@
             alert(alertMessage);
             return;
         }
-        
+
         shuffleArray(flashcardWords);
         currentFlashcardIndex = 0;
         flashcardModal.style.display = 'block';
@@ -1189,17 +1207,17 @@
         if (flashcardWords.length === 0) return;
         const currentWord = flashcardWords[currentFlashcardIndex];
         const originalWord = vocabulary.words.find(w => w.id === currentWord.id);
-        
+
         if (originalWord) {
             originalWord.memorized = !originalWord.memorized;
         }
 
         flashcardWords.splice(currentFlashcardIndex, 1);
-        
+
         if (currentFlashcardIndex >= flashcardWords.length && flashcardWords.length > 0) {
             currentFlashcardIndex = 0;
         }
-        
+
         displayFlashcard();
     }
 
@@ -1208,7 +1226,7 @@
         saveToStorage();
         updateDisplay();
     }
-    
+
     // 이벤트 리스너
     document.getElementById('startNotMemFlashcardBtn')
         .addEventListener('click', () => startFlashcardSession('notMemorized'));
