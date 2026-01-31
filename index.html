@@ -1027,27 +1027,79 @@
 
     // 사전 검색은 악센트 제거해서 검색: béda -> beda
     function showKBBI(id) {
-        const word = vocabulary.words.find(w => w.id === id);
-        if (word) window.open(
-            `https://kbbi.web.id/${encodeURIComponent(stripDiacritics(word.word))}`,
-            '_blank'
-        );
+      const item = vocabulary.words.find(w => w.id === id);
+      if (!item) return;
+    
+      const terms = getLookupTerms(item.word);
+    
+      if (terms.length <= 1) {
+        const q = terms[0] ?? stripDiacritics(item.word);
+        window.open(`https://kbbi.web.id/${encodeURIComponent(q)}`, '_blank');
+        return;
+      }
+    
+      terms.forEach(t => {
+        window.open(`https://kbbi.web.id/${encodeURIComponent(t)}`, '_blank');
+      });
     }
 
+    function getLookupTerms(raw) {
+      // 악센트 제거 + 앞뒤 공백 정리
+      const cleaned = stripDiacritics(raw).trim();
+    
+      // 공백(여러 칸 포함) 기준으로 단어 분리
+      const terms = cleaned.split(/\s+/).filter(Boolean);
+    
+      // 중복 제거
+      return [...new Set(terms)];
+    }
+    
     function showNaver(id) {
-        const word = vocabulary.words.find(w => w.id === id);
-        if (word) window.open(
-            `https://dict.naver.com/idkodict/#/search?query=${encodeURIComponent(stripDiacritics(word.word))}`,
-            '_blank'
+      const item = vocabulary.words.find(w => w.id === id);
+      if (!item) return;
+    
+      const terms = getLookupTerms(item.word);
+    
+      // 단어가 1개면 기존처럼 1탭
+      if (terms.length <= 1) {
+        const q = terms[0] ?? stripDiacritics(item.word);
+        window.open(
+          `https://dict.naver.com/idkodict/#/search?query=${encodeURIComponent(q)}`,
+          '_blank'
         );
+        return;
+      }
+    
+      // 여러 단어면: 각 단어를 따로 탭으로 열기 (piket / malam)
+      terms.forEach(t => {
+        window.open(
+          `https://dict.naver.com/idkodict/#/search?query=${encodeURIComponent(t)}`,
+          '_blank'
+        );
+      });
     }
-
+    
     function showDaum(id) {
-        const word = vocabulary.words.find(w => w.id === id);
-        if (word) window.open(
-            `https://dic.daum.net/search.do?q=${encodeURIComponent(stripDiacritics(word.word))}&dic=id`,
-            '_blank'
+      const item = vocabulary.words.find(w => w.id === id);
+      if (!item) return;
+    
+      const terms = getLookupTerms(item.word);
+    
+      if (terms.length <= 1) {
+        const q = terms[0] ?? stripDiacritics(item.word);
+        window.open(
+          `https://dic.daum.net/search.do?q=${encodeURIComponent(q)}&dic=id`,
+          '_blank'
         );
+        return;
+      }
+    
+      terms.forEach(t => {
+        window.open(
+          `https://dic.daum.net/search.do?q=${encodeURIComponent(t)}&dic=id`,
+          '_blank'
+        );
+      });
     }
 
     function exportToExcel() {
